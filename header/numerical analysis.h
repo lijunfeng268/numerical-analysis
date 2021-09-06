@@ -20,4 +20,4 @@ void gaussin(double a[n][n], double b[n]);
 //三角分解法 LU分解
 void ALU(double a[n][n], double b[n]);
 void printarray(double a[n][n]);
- 
+void printarray(double a[n]);
