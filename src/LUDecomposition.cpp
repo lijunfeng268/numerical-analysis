@@ -3,45 +3,86 @@
 
 using namespace std;
 
-//1ã€è¦æ±‚AX=B
-//2ã€A=LUæ±‚å‡ºLä¸UçŸ©é˜µ åˆ™LUX=B
-//3ã€LY=B æ±‚å‡ºY
-//4ã€LUX=LY åˆ™UX=Y å¯æ±‚å‡ºX
+//1¡¢ÒªÇóAX=B
+//2¡¢A=LUÇó³öLÓëU¾ØÕó ÔòLUX=B
+//3¡¢LY=B Çó³öY
+//4¡¢LUX=LY ÔòUX=Y ¿ÉÇó³öX
 
 void ALU(double a[n][n], double b[n])
 {
 	double u[n][n] = { 0 };
-	double l[n] [n] = { 0 };
-	//æ­¥éª¤äºŒ
-	//å¯¹UçŸ©é˜µçš„ç¬¬ä¸€è¡Œèµ‹å€¼=AçŸ©é˜µç¬¬ä¸€è¡Œ
+	double l[n][n] = { 0 };
+	//²½Öè¶ş
+	//¶ÔU¾ØÕóµÄµÚÒ»ĞĞ¸³Öµ=A¾ØÕóµÚÒ»ĞĞ
 	for (int j = 0; j < n; j++)
 	{
 		u[0][j] = a[0][j];
 	}
-	//å¯¹LçŸ©é˜µå¯¹è§’çº¿èµ‹å€¼ä¸º1
+	//¶ÔL¾ØÕó¶Ô½ÇÏß¸³ÖµÎª1
 	for (int i = 0; i < n; i++)
 	{
 		l[i][i] = 1;
 	}
-	//å¯¹LçŸ©é˜µç¬¬ä¸€åˆ—èµ‹å€¼=AçŸ©é˜µç¬¬ä¸€åˆ—/UçŸ©é˜µu[0][0]
+	//¶ÔL¾ØÕóµÚÒ»ÁĞ¸³Öµ=A¾ØÕóµÚÒ»ÁĞ/U¾ØÕóu[0][0]
 	for (int i = 1; i < n; i++)
 	{
 		l[i][0] = a[i][0] / u[0][0];
 	}
-	//printarray(l);
-	//printarray(u);
-	//æ±‚UçŸ©é˜µç¬¬äºŒè¡Œu[1][1]ã€u[1][2]-æ±‚LçŸ©é˜µç¬¬äºŒåˆ—L[2][1]-æ±‚UçŸ©é˜µUç¬¬ä¸‰è¡Œ
+	printarray(l);
+	printarray(u);
+	//ÇóU¾ØÕóµÚ¶şĞĞu[1][1]¡¢u[1][2]-ÇóL¾ØÕóµÚ¶şÁĞL[2][1]-ÇóU¾ØÕóUµÚÈıĞĞ
 	for (int i = 1; i < n; i++)
 	{
+		//ÇóuµÚ¶şĞĞ
 		for (int j = i; j < n; j++)
 		{
-			double sum = 0;
+			double sum1 = 0;
 			for (int k = 0; k < i; k++)
 			{
-				sum += l[i][k] * u[k][j];
+				sum1 += l[i][k] * u[k][j];
 			}
-			u[i][j] = sum - a[i][j];
+			u[i][j] = a[i][j]-sum1;
+			//printarray(u);
 		}
-
+		//ÇólµÚ¶şÁĞ
+		for (int j = i + 1; j < n; j++)
+		{
+			double sum2 = 0;
+			for (int k = 0; k < i; k++)
+			{
+				sum2 += l[j][k] * u[k][i];
+			}
+			l[j][i] = (a[j][i] - sum2) / u[i][i];
+		}
+		//printarray(u);
+		//printarray(l);
 	}
+	//3¡¢LY = B Çó³öY
+	double y[n] = { 0 };
+	y[0] = b[0];
+	for (int i = 1; i < n; i++)
+	{
+		double sum3 = 0;
+		for (int j = 0; j < n; j++)
+		{
+			sum3 += l[i][j] * y[j];
+		}
+		y[i] = b[i] - sum3;
+	}
+	printarray(y);
+
+	//4¡¢LUX=LY ÔòUX=Y ¿ÉÇó³öX
+	double x[n] = { 0 };
+	x[n - 1] = y[n - 1] / u[n - 1][n - 1];
+	for (int i = n - 2; i >= 0; i--)
+	{
+		double sum4 = 0;
+		for (int j = i + 1; j < n; j++)
+		{
+			sum4 += u[i][j] * x[j];
+		}
+		x[i] = (y[i] - sum4) / u[i][i];
+	}
+	printarray(x);
+	return;
 }

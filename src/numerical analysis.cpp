@@ -39,25 +39,25 @@ int findColumnMax(double a[n][n], int j)
 
 	for (int i = j; i < n; i++)
 	{
-		//ä»¥å¯¹è§’çº¿ä¸Šçš„å€¼ä¸ºåŸºå‡†ï¼Œåˆ¤æ–­å½“å‰è¡Œå‘ä¸‹çš„æ¯ä¸€è¡Œä¸­å½“å‰åˆ—æœ€å¤§å€¼
+		//ÒÔ¶Ô½ÇÏßÉÏµÄÖµÎª»ù×¼£¬ÅÐ¶Ïµ±Ç°ÐÐÏòÏÂµÄÃ¿Ò»ÐÐÖÐµ±Ç°ÁÐ×î´óÖµ
 		if (a[i][j] > max)
 		{
 			max = a[i][j];
 			line = i;
 		}
 	}
-	cout << "å½“å‰æœ€å‰åˆ—çš„æœ€å¤§å€¼ï¼š" << max << " ç¬¬" << line + 1 << "è¡Œ" << endl;
+	cout << "µ±Ç°×îÇ°ÁÐµÄ×î´óÖµ£º" << max << " µÚ" << line + 1 << "ÐÐ" << endl;
 	return line;
 }
 
 void swapline(int line, double a[n][n], int k, double b[n])
 {
-	//kä¸ºæ¶ˆå…ƒæ¬¡æ•°,åœ¨è¿™ä¸ªå‡½æ•°ä¸­å¯ä»£è¡¨å½“å‰ç³»æ•°çŸ©é˜µçš„ç¬¬ä¸€è¡Œ
+	//kÎªÏûÔª´ÎÊý,ÔÚÕâ¸öº¯ÊýÖÐ¿É´ú±íµ±Ç°ÏµÊý¾ØÕóµÄµÚÒ»ÐÐ
 	if (line == k)
 	{
-		cout << "å½“å‰è¡Œå·²ç»ä¸ºæœ€å¤§å€¼ï¼Œä¸éœ€è¦è½¬æ¢" << endl;
+		cout << "µ±Ç°ÐÐÒÑ¾­Îª×î´óÖµ£¬²»ÐèÒª×ª»»" << endl;
 		cout << "------------------------------------" << endl;
-		return;//å¦‚æžœå½“å‰è¡Œå·²ç»ä¸ºæœ€å¤§å€¼ï¼Œä¸éœ€è¦è½¬æ¢
+		return;//Èç¹ûµ±Ç°ÐÐÒÑ¾­Îª×î´óÖµ£¬²»ÐèÒª×ª»»
 	}
 	double t[n][n] = { 0 };
 	double tb = 0;
@@ -88,6 +88,31 @@ void printarray(double a[n][n])
 		{
 			dvec.push_back(a[i][j]);
 		}
+	}
+
+	for (vector<double>::iterator dit = dvec.begin();
+		dit != dvec.end(); dit++)
+	{
+		cout.width(8);
+		cout << *dit << " ";
+		cnt++;
+		if (cnt % (n) == 0)
+		{
+			cout << endl;
+		}
+	}
+	cout << endl;
+}
+
+void printarray(double a[n])
+{
+	vector<double>dvec;
+	int cnt = 0;
+
+	for (int i = 0; i < n; i++)
+	{
+		
+			dvec.push_back(a[i]);
 	}
 
 	for (vector<double>::iterator dit = dvec.begin();
